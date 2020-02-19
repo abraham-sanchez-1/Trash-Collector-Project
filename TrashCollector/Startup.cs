@@ -62,6 +62,7 @@ namespace TrashCollector
             app.UseAuthentication();
             app.UseAuthorization();
 
+            //change the default path to registration or login page
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
