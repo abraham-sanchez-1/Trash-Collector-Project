@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,16 +12,21 @@ namespace TrashCollector.Models
     {
         [Key]
         public int Id { get; set; }
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
         public double Balance { get; set; }
         public DayOfWeek PickUpDay { get; set; }
         public DateTime SuspendStart { get; set; }
         public DateTime SuspendEnd { get; set; }
         [ForeignKey ("Address")]
-        public Address AddressId { get; set; }
-        //[ForeignKey (login)]
-        //public int  { get; set; }
+        public int AddressId { get; set; }
+        public Address Address { get; set; }
+        [ForeignKey("IdentityUser")]
+        [Display(Name ="Identity User")]
+        public string UserId { get; set; }
+        public IdentityUser IdentityUser { get; set; }
 
 
 
