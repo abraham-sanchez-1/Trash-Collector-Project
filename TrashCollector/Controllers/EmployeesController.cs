@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -20,11 +21,15 @@ namespace TrashCollector.Controllers
         }
 
         // GET: Employees
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var applicationDbContext = _context.Employees.Include(e => e.IdentityUser);
-            var userInfo = _
-            return View(await applicationDbContext.ToListAsync());
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var employee = _context.Employees.FirstOrDefault(a => a.UserId == userId);
+            if (employee is null)
+            {
+                return RedirectToAction("Create");
+            }
+            return View("Edit");
         }
 
         // GET: Employees/Details/5
@@ -49,8 +54,7 @@ namespace TrashCollector.Controllers
         // GET: Employees/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
-            return View(new CustomerViewModel { Customer = new Customer(), Address = new Address() });
+            return View();
         }
 
         // POST: Employees/Create
@@ -58,16 +62,22 @@ namespace TrashCollector.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,ZipCode,UserId")] Employee employee)
+        public IActionResult Create( EmployeeViewModel employeeViewModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(employee);
-                await _context.SaveChangesAsync();
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                var employee = employeeViewModel.Employee;
+                employee.UserId = userId;
+                _context.Employees.Add(employee);
+
+
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", employee.UserId);
-            return View(employee);
+
+            return View(employeeViewModel);
         }
 
         // GET: Employees/Edit/5

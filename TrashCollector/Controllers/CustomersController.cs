@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,14 +17,23 @@ namespace TrashCollector.Controllers
 
         public CustomersController(ApplicationDbContext context)
         {
+            
             _context = context;
         }
 
         // GET: Customers
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var applicationDbContext = _context.Customers.Include(c => c.Address).Include(c => c.IdentityUser);
-            return View(await applicationDbContext.ToListAsync());
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var customer = _context.Customers.FirstOrDefault(a=> a.UserId == userId);
+            if (customer is null)
+            {
+                return RedirectToAction("Create");
+            }
+            var existingModel = new CustomerViewModel();
+            existingModel.Customer = _context.Customers.FirstOrDefault(a => a.UserId == userId);
+
+            return RedirectToAction("Edit");
         }
 
         // GET: Customers/Details/5
@@ -49,8 +59,7 @@ namespace TrashCollector.Controllers
         // GET: Customers/Create
         public IActionResult Create()
         {
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Id");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            
             return View();
         }
 
@@ -59,17 +68,27 @@ namespace TrashCollector.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Balance,PickUpDay,SuspendStart,SuspendEnd,AddressId,UserId")] Customer customer)
+        public IActionResult Create(CustomerViewModel customerViewModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(customer);
-                await _context.SaveChangesAsync();
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var address = customerViewModel.Address;
+                _context.Addresses.Add(address);
+                _context.SaveChanges();
+
+                var customer = customerViewModel.Customer;
+
+                customer.AddressId = address.Id;
+                customer.UserId = userId;
+                _context.Customers.Add(customer);
+                
+                
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Id", customer.AddressId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", customer.UserId);
-            return View(customer);
+            
+            return View(customerViewModel);
         }
 
         // GET: Customers/Edit/5
