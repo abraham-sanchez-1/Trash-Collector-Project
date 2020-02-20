@@ -30,8 +30,8 @@ namespace TrashCollector.Controllers
             {
                 return RedirectToAction("Create");
             }
-            var existingModel = new CustomerViewModel();
-            existingModel.Customer = _context.Customers.FirstOrDefault(a => a.UserId == userId);
+            
+
 
             return RedirectToAction("Edit");
         }
@@ -92,21 +92,16 @@ namespace TrashCollector.Controllers
         }
 
         // GET: Customers/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var customer = _context.Customers.FirstOrDefault(a => a.UserId == userId);
+            var existingModel = new CustomerViewModel();
+            existingModel.Customer = customer;
+            existingModel.Address = _context.Addresses.FirstOrDefault(a => a.Id == customer.AddressId);
 
-            var customer = await _context.Customers.FindAsync(id);
-            if (customer == null)
-            {
-                return NotFound();
-            }
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Id", customer.AddressId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", customer.UserId);
-            return View(customer);
+            
+            return View(existingModel);
         }
 
         // POST: Customers/Edit/5
@@ -114,36 +109,17 @@ namespace TrashCollector.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Balance,PickUpDay,SuspendStart,SuspendEnd,AddressId,UserId")] Customer customer)
+        public IActionResult Edit(CustomerViewModel customerViewModel)
         {
-            if (id != customer.Id)
-            {
-                return NotFound();
-            }
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var address = customerViewModel.Address;
+                _context.Addresses.Update(address);
+                _context.SaveChanges();
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(customer);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CustomerExists(customer.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Id", customer.AddressId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", customer.UserId);
-            return View(customer);
+                var customer = customerViewModel.Customer;
+                _context.Customers.Update(customer);
+                _context.SaveChanges();
+            return View(customerViewModel);
         }
 
         // GET: Customers/Delete/5

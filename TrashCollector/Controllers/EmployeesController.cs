@@ -29,7 +29,7 @@ namespace TrashCollector.Controllers
             {
                 return RedirectToAction("Create");
             }
-            return View("Edit");
+            return View("Edit", employee);
         }
 
         // GET: Employees/Details/5

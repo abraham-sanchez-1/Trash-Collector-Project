@@ -9,7 +9,81 @@
 
 <h4>User Action Page</h4>
 <hr />
-<h5>Personal Info</h5>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer.Balance)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer.PickUpDay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer.SuspendStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer.SuspendEnd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address.StreetName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address.State)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address.ZipCode)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.Customer.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Customer.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Customer.Balance)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Customer.PickUpDay)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Customer.SuspendStart)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Customer.SuspendEnd)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Address.StreetName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Address.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Address.State)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Address.ZipCode)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<hr/>
+<h5>Edit Info</h5>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
@@ -31,7 +105,16 @@
             </div>
             <div class="form-group">
                 <label asp-for="Customer.PickUpDay" class="control-label"></label>
-                <select asp-for="Customer.PickUpDay" class="form-control"></select>
+                <select asp-for="Customer.PickUpDay" class="form-control">
+                    <option value="">Select Day</option>
+                    <option value="0">Sunday</option>
+                    <option value="1">Monday</option>
+                    <option value="2">Tuesday</option>
+                    <option value="3">Wednesday</option>
+                    <option value="4">Thursday</option>
+                    <option value="5">Friday</option>
+                    <option value="6">Saturday</option>
+                </select>
                 <span asp-validation-for="Customer.PickUpDay" class="text-danger"></span>
             </div>
             <div class="form-group">
