@@ -17,6 +17,7 @@ namespace TrashCollector.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
         public double Balance { get; set; }
+        [Display(Name = "Pick Up Day")]
         public DayOfWeek PickUpDay { get; set; }
         public DateTime SuspendStart { get; set; }
         public DateTime SuspendEnd { get; set; }

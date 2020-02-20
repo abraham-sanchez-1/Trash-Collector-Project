@@ -23,6 +23,7 @@ namespace TrashCollector.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Employees.Include(e => e.IdentityUser);
+            var userInfo = _
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -49,7 +50,7 @@ namespace TrashCollector.Controllers
         public IActionResult Create()
         {
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
-            return View();
+            return View(new CustomerViewModel { Customer = new Customer(), Address = new Address() });
         }
 
         // POST: Employees/Create

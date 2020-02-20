@@ -28,6 +28,7 @@ namespace TrashCollector.Controllers
             }
             if (User.IsInRole("Employee"))
             {
+                //Employee employee = 
                 return Redirect("./Employees/Index");
             }
             else if (User.IsInRole("Customer"))

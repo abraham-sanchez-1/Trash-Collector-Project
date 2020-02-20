@@ -32,10 +32,16 @@
                 @Html.DisplayNameFor(model => model.SuspendEnd)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address)
+                @Html.DisplayNameFor(model => model.Address.StreetName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdentityUser)
+                @Html.DisplayNameFor(model => model.Address.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address.State)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address.ZipCode)
             </th>
             <th></th>
         </tr>
@@ -62,10 +68,16 @@
                 @Html.DisplayFor(modelItem => item.SuspendEnd)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Address.Id)
+                @Html.DisplayFor(modelItem => item.Address.StreetName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdentityUser.Id)
+                @Html.DisplayFor(modelItem => item.Address.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address.State)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address.ZipCode)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
