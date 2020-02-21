@@ -18,6 +18,7 @@ namespace TrashCollector.Models
         [Required]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
+        [Display(Name = "Current Balance")]
         public double Balance { get; set; }
         [Display(Name = "Pick Up Day")]
         public DayOfWeek PickUpDay { get; set; }
