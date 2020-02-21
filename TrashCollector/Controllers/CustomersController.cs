@@ -36,26 +36,6 @@ namespace TrashCollector.Controllers
             return RedirectToAction("Edit");
         }
 
-        //// GET: Customers/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var customer = await _context.Customers
-        //        .Include(c => c.Address)
-        //        .Include(c => c.IdentityUser)
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (customer == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(customer);
-        //}
-
         // GET: Customers/Create
         public IActionResult Create()
         {

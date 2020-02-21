@@ -29,29 +29,9 @@ namespace TrashCollector.Controllers
             {
                 return RedirectToAction("Create");
             }
-            return View("Edit", employee);
+            return RedirectToAction("Edit");
         }
-
-        // GET: Employees/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var employee = await _context.Employees
-                .Include(e => e.IdentityUser)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (employee == null)
-            {
-                return NotFound();
-            }
-
-            return View(employee);
-        }
-
-        // GET: Employees/Create
+        //Get: Employee/Create
         public IActionResult Create()
         {
             return View();
@@ -77,24 +57,17 @@ namespace TrashCollector.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(employeeViewModel);
+            return RedirectToAction("Index");
         }
 
         // GET: Employees/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var employee = await _context.Employees.FindAsync(id);
-            if (employee == null)
-            {
-                return NotFound();
-            }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", employee.UserId);
-            return View(employee);
+           var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var employee = _context.Employees.FirstOrDefault(a => a.UserId == userId);
+            var existingModel = new EmployeeViewModel();
+            existingModel.Employee = employee;
+            return View(existingModel);
         }
 
         // POST: Employees/Edit/5
@@ -102,35 +75,12 @@ namespace TrashCollector.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,ZipCode,UserId")] Employee employee)
+        public IActionResult Edit(EmployeeViewModel employeeModel)
         {
-            if (id != employee.Id)
-            {
-                return NotFound();
-            }
+            
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(employee);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!EmployeeExists(employee.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", employee.UserId);
-            return View(employee);
+            return RedirectToAction(nameof(Index));
+           
         }
 
         // GET: Employees/Delete/5

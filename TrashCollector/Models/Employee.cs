@@ -19,7 +19,7 @@ namespace TrashCollector.Models
         [Display(Name = "Last Name")]
         public string LastName{ get; set; }
         [Required]
-        [Display(Name = "Zip Code")]
+        [Display(Name = "Zip Code Coverage")]
         [DataType(DataType.PostalCode)]
         public string ZipCode{ get; set; }
         [ForeignKey ("IdentityUser")]
