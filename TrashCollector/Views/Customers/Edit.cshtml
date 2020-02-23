@@ -48,6 +48,14 @@
                 </tr>
                 <tr>
                     <th>
+                        @Html.DisplayNameFor(model => model.Customer.OneTimePickUp)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.Customer.OneTimePickUp)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
                         @Html.DisplayNameFor(model => model.Customer.SuspendStart)
                     </th>
                     <td>
@@ -104,6 +112,16 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-inline">
                     <div class="form-group">
+                        <input type="hidden" asp-for="Customer.Id" />
+                        <input type="hidden" asp-for="Customer.FirstName" />
+                        <input type="hidden" asp-for="Customer.LastName" />
+                        <input type="hidden" asp-for="Customer.Balance" />
+                        <input type="hidden" asp-for="Customer.LastPickedUp" />
+                        <input type="hidden" asp-for="Customer.AddressId" />
+                        <input type="hidden" asp-for="Customer.UserId" />
+                        <input type="hidden" asp-for="Address.Id" />
+                    </div>
+                    <div class="form-group">
                         <label asp-for="Customer.PickUpDay" class="control-label"></label>
                         <select asp-for="Customer.PickUpDay" class="form-control">
                             <option value="">Select Day</option>
@@ -120,49 +138,56 @@
                 </div>
                 <div class="form-inline">
                     <div class="form-group">
+                        <label asp-for="Customer.OneTimePickUp" class="control-label"></label>
+                        <input asp-for="Customer.OneTimePickUp" class="form-control" />
+                        <span asp-validation-for="Customer.OneTimePickUp" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-inline">
+                    <div class="form-group">
                         <label asp-for="Customer.SuspendStart" class="control-label"></label>
                         <input asp-for="Customer.SuspendStart" class="form-control" />
                         <span asp-validation-for="Customer.SuspendStart" class="text-danger"></span>
                     </div>
                 </div>
-                    <div class="form-inline">
-                        <div class="form-group">
-                            <label asp-for="Customer.SuspendEnd" class="control-label"></label>
-                            <input asp-for="Customer.SuspendEnd" class="form-control" />
-                            <span asp-validation-for="Customer.SuspendEnd" class="text-danger"></span>
-                        </div>
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label asp-for="Customer.SuspendEnd" class="control-label"></label>
+                        <input asp-for="Customer.SuspendEnd" class="form-control" />
+                        <span asp-validation-for="Customer.SuspendEnd" class="text-danger"></span>
                     </div>
-                        <div class="form-inline">
-                            <div class="form-group">
-                                <label asp-for="Address.StreetName" class="control-label"></label>
-                                <input asp-for="Address.StreetName" class="form-control" />
-                                <span asp-validation-for="Address.StreetName" class="text-danger"></span>
-                            </div>
-                        </div>
-                            <div class="form-inline">
-                                <div class="form-group">
-                                    <label asp-for="Address.City" class="control-label"></label>
-                                    <input asp-for="Address.City" class="form-control" />
-                                    <span asp-validation-for="Address.City" class="text-danger"></span>
-                                </div>
-                            </div>
-                                <div class="form-inline">
-                                    <div class="form-group">
-                                        <label asp-for="Address.State" class="control-label"></label>
-                                        <input asp-for="Address.State" class="form-control" />
-                                        <span asp-validation-for="Address.State" class="text-danger"></span>
-                                    </div>
-                                </div>
-                                    <div class="form-inline">
-                                        <div class="form-group">
-                                            <label asp-for="Address.ZipCode" class="control-label"></label>
-                                            <input asp-for="Address.ZipCode" class="form-control" />
-                                            <span asp-validation-for="Address.ZipCode" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                        <div class="form-group">
-                                            <input type="submit" value="Update" class="btn btn-primary" />
-                                        </div>
+                </div>
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label asp-for="Address.StreetName" class="control-label"></label>
+                        <input asp-for="Address.StreetName" class="form-control" />
+                        <span asp-validation-for="Address.StreetName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label asp-for="Address.City" class="control-label"></label>
+                        <input asp-for="Address.City" class="form-control" />
+                        <span asp-validation-for="Address.City" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label asp-for="Address.State" class="control-label"></label>
+                        <input asp-for="Address.State" class="form-control" />
+                        <span asp-validation-for="Address.State" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label asp-for="Address.ZipCode" class="control-label"></label>
+                        <input asp-for="Address.ZipCode" class="form-control" />
+                        <span asp-validation-for="Address.ZipCode" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Update" class="btn btn-primary" />
+                </div>
             </form>
         
         </div>
