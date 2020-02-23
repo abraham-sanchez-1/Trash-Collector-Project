@@ -61,6 +61,7 @@ namespace TrashCollector.Controllers
 
                 customer.AddressId = address.Id;
                 customer.UserId = userId;
+                customer.LastPickedUp = DateTime.Today;
                 _context.Customers.Add(customer);
                 
                 

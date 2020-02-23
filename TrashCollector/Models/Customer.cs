@@ -22,6 +22,9 @@ namespace TrashCollector.Models
         public double Balance { get; set; }
         [Display(Name = "Pick Up Day")]
         public DayOfWeek PickUpDay { get; set; }
+        [Display(Name = "Last Picked Up")]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime LastPickedUp { get; set; }
         [Display(Name = "One Time Pickup")]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime OneTimePickUp { get; set; }
