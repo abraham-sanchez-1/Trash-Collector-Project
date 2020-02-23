@@ -101,6 +101,10 @@ namespace TrashCollector.Controllers
             customerToBeUpdated.SuspendStart = customer.SuspendStart;
             customerToBeUpdated.SuspendEnd = customer.SuspendEnd;
             Address addressToBeChanged = _context.Addresses.Where(a => a.Id == addressId).FirstOrDefault();
+            addressToBeChanged.StreetName = address.StreetName;
+            addressToBeChanged.City = address.City;
+            addressToBeChanged.State = address.State;
+            addressToBeChanged.ZipCode = address.ZipCode;
                 
             _context.SaveChanges();
 

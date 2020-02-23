@@ -1,0 +1,76 @@
+﻿@model TrashCollector.Models.Customer
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Customer</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Balance" class="control-label"></label>
+                <input asp-for="Balance" class="form-control" />
+                <span asp-validation-for="Balance" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PickUpDay" class="control-label"></label>
+                <select asp-for="PickUpDay" class="form-control"></select>
+                <span asp-validation-for="PickUpDay" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastPickedUp" class="control-label"></label>
+                <input asp-for="LastPickedUp" class="form-control" />
+                <span asp-validation-for="LastPickedUp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OneTimePickUp" class="control-label"></label>
+                <input asp-for="OneTimePickUp" class="form-control" />
+                <span asp-validation-for="OneTimePickUp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SuspendStart" class="control-label"></label>
+                <input asp-for="SuspendStart" class="form-control" />
+                <span asp-validation-for="SuspendStart" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SuspendEnd" class="control-label"></label>
+                <input asp-for="SuspendEnd" class="form-control" />
+                <span asp-validation-for="SuspendEnd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressId" class="control-label"></label>
+                <select asp-for="AddressId" class="form-control" asp-items="ViewBag.AddressId"></select>
+                <span asp-validation-for="AddressId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

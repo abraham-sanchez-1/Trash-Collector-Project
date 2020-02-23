@@ -46,6 +46,51 @@
     </div>
 </div>
 
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                First Name
+            </th>
+            <th>
+                Last Name
+            </th>
+            <th>
+                Address
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Customers != null)
+        {
+            @foreach (var item in Model.Customers)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.Address.StreetAddress)
+                    </td>
+                    @if (!Model.HidePickupTrash)
+                    {
+                        <td>
+                            <a asp-action="PickupTrash" asp-route-id="@item.Id">Pickup Trash</a>
+                        </td>
+                    }*@
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>
+
+
+
 
         @section Scripts {
             @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
