@@ -9,9 +9,13 @@
 
 
 <hr />
+
 <div class="container">
+    
     <div class="row">
+        
         <div class="col-6">
+            <h5>User information</h5>
             <table style="width:100%" class="table table-dark table-sm">
 
                 <tr>
@@ -37,6 +41,21 @@
                     <td>
                         $@Html.DisplayFor(model => model.Customer.Balance).00
                     </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Customer.IsSuspended)
+                    </th>
+
+                    @if (Model.Customer.IsSuspended == false)
+                    {
+                        <td><span class="badge badge-pill badge-success">Active</span></td>
+                    }
+                    else
+                    {
+                        <td><span class="badge badge-pill badge-danger">Suspended</span></td>
+                    }
+
                 </tr>
                 <tr>
                     <th>
@@ -121,89 +140,84 @@
                         <input type="hidden" asp-for="Customer.UserId" />
                         <input type="hidden" asp-for="Address.Id" />
                     </div>
+                    <table style="width:100%" class="table table-dark table-sm">
+                        <tr>
+                            <th><label asp-for="Customer.PickUpDay" class="control-label"></label></th>
+                            <td>
+                                <select asp-for="Customer.PickUpDay" class="form-control">
+                                    <option value="">Select Day</option>
+
+                                    <option value="1">Monday</option>
+                                    <option value="2">Tuesday</option>
+                                    <option value="3">Wednesday</option>
+                                    <option value="4">Thursday</option>
+                                    <option value="5">Friday</option>
+
+                                </select>
+                                <span asp-validation-for="Customer.PickUpDay" class="text-danger"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><label asp-for="Customer.OneTimePickUp" class="control-label"></label></th>
+                            <td>
+                                <input asp-for="Customer.OneTimePickUp" class="form-control" />
+                                <span asp-validation-for="Customer.OneTimePickUp" class="text-danger"></span>
+                            </td>
+                        </tr>
+
+
+
+                        <tr>
+                            <th><label asp-for="Address.StreetName" class="control-label"></label></th>
+                            <td>
+                                <input asp-for="Address.StreetName" class="form-control" />
+                                <span asp-validation-for="Address.StreetName" class="text-danger"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><label asp-for="Address.City" class="control-label"></label></th>
+                            <td>
+                                <input asp-for="Address.City" class="form-control" />
+                                <span asp-validation-for="Address.City" class="text-danger"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><label asp-for="Address.State" class="control-label"></label></th>
+                            <td>
+                                <input asp-for="Address.State" class="form-control" />
+                                <span asp-validation-for="Address.State" class="text-danger"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><label asp-for="Address.ZipCode" class="control-label"></label></th>
+                            <td>
+                                <input asp-for="Address.ZipCode" class="form-control" />
+                                <span asp-validation-for="Address.ZipCode" class="text-danger"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><label asp-for="Customer.SuspendStart" class="control-label"></label></th>
+                            <td>
+                                <input asp-for="Customer.SuspendStart" class="form-control" />
+                                <span asp-validation-for="Customer.SuspendStart" class="text-danger"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><label asp-for="Customer.SuspendEnd" class="control-label"></label></th>
+                            <td>
+                                <input asp-for="Customer.SuspendEnd" class="form-control" />
+                                <span asp-validation-for="Customer.SuspendEnd" class="text-danger"></span>
+                            </td>
+                        </tr>
+
+                    </table>
                     <div class="form-group">
-
+                        <input type="submit" value="Update" class="btn btn-primary" />
                     </div>
-                </div>
-                <table style="width:100%" class="table table-dark table-sm">
-                    <tr>
-                        <th><label asp-for="Customer.PickUpDay" class="control-label"></label></th>
-                        <td>
-                            <select asp-for="Customer.PickUpDay" class="form-control">
-                                <option value="">Select Day</option>
-
-                                <option value="1">Monday</option>
-                                <option value="2">Tuesday</option>
-                                <option value="3">Wednesday</option>
-                                <option value="4">Thursday</option>
-                                <option value="5">Friday</option>
-
-                            </select>
-                            <span asp-validation-for="Customer.PickUpDay" class="text-danger"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><label asp-for="Customer.OneTimePickUp" class="control-label"></label></th>
-                        <td>
-                            <input asp-for="Customer.OneTimePickUp" class="form-control" />
-                            <span asp-validation-for="Customer.OneTimePickUp" class="text-danger"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><label asp-for="Customer.SuspendStart" class="control-label"></label></th>
-                        <td>
-                            <input asp-for="Customer.SuspendStart" class="form-control" />
-                            <span asp-validation-for="Customer.SuspendStart" class="text-danger"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><label asp-for="Customer.SuspendEnd" class="control-label"></label></th>
-                        <td>
-                            <input asp-for="Customer.SuspendEnd" class="form-control" />
-                            <span asp-validation-for="Customer.SuspendEnd" class="text-danger"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><label asp-for="Address.StreetName" class="control-label"></label></th>
-                        <td>
-                            <input asp-for="Address.StreetName" class="form-control" />
-                            <span asp-validation-for="Address.StreetName" class="text-danger"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><label asp-for="Address.City" class="control-label"></label></th>
-                        <td>
-                            <input asp-for="Address.City" class="form-control" />
-                            <span asp-validation-for="Address.City" class="text-danger"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><label asp-for="Address.State" class="control-label"></label></th>
-                        <td>
-                            <input asp-for="Address.State" class="form-control" />
-                            <span asp-validation-for="Address.State" class="text-danger"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><label asp-for="Address.ZipCode" class="control-label"></label></th>
-                        <td>
-                            <input asp-for="Address.ZipCode" class="form-control" />
-                            <span asp-validation-for="Address.ZipCode" class="text-danger"></span>
-                        </td>
-                    </tr>
-
-
-
-
-
-                </table>
-                <div class="form-group">
-                    <input type="submit" value="Update" class="btn btn-primary" />
-                </div>
             </form>
 
         </div>
-        
+
     </div>
 
 </div>

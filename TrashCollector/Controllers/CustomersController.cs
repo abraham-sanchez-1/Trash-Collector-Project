@@ -55,6 +55,7 @@ namespace TrashCollector.Controllers
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var address = customerViewModel.Address;
                 _context.Addresses.Add(address);
+               
                 _context.SaveChanges();
 
                 var customer = customerViewModel.Customer;
@@ -71,6 +72,7 @@ namespace TrashCollector.Controllers
             
             return View(customerViewModel);
         }
+
 
         // GET: Customers/Edit/5
         public IActionResult Edit()
@@ -100,6 +102,15 @@ namespace TrashCollector.Controllers
             customerToBeUpdated.PickUpDay = customer.PickUpDay;
             customerToBeUpdated.SuspendStart = customer.SuspendStart;
             customerToBeUpdated.SuspendEnd = customer.SuspendEnd;
+            customerToBeUpdated.IsSuspended = customer.IsSuspended;
+            if (DateTime.Today >= customerToBeUpdated.SuspendStart && DateTime.Today <= customerToBeUpdated.SuspendEnd)
+            {
+                customerToBeUpdated.IsSuspended = true;
+            }
+            else
+            {
+                customerToBeUpdated.IsSuspended = false;
+            }
             Address addressToBeChanged = _context.Addresses.Where(a => a.Id == addressId).FirstOrDefault();
             addressToBeChanged.StreetName = address.StreetName;
             addressToBeChanged.City = address.City;
@@ -110,37 +121,6 @@ namespace TrashCollector.Controllers
 
             return RedirectToAction("Index");
         }
-
-        //// GET: Customers/Delete/5
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var customer = await _context.Customers
-        //        .Include(c => c.Address)
-        //        .Include(c => c.IdentityUser)
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (customer == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(customer);
-        //}
-
-        //// POST: Customers/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    var customer = await _context.Customers.FindAsync(id);
-        //    _context.Customers.Remove(customer);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
 
         private bool CustomerExists(int id)
         {

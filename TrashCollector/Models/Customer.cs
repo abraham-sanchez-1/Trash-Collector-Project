@@ -23,19 +23,19 @@ namespace TrashCollector.Models
         [Display(Name = "Pick Up Day")]
         public DayOfWeek PickUpDay { get; set; }
         [Display(Name = "Last Picked Up")]
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        [DataType(DataType.Date)]
         public DateTime LastPickedUp { get; set; }
         [Display(Name = "One Time Pickup")]
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime OneTimePickUp { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? OneTimePickUp { get; set; }
         [Display(Name ="Account Status")]
         public bool IsSuspended { get; set; }
         [Display(Name = "Suspend Start")]
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime SuspendStart { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? SuspendStart { get; set; }
         [Display(Name = "Suspend End")]
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime SuspendEnd { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? SuspendEnd { get; set; }
         [ForeignKey ("Address")]
         public int AddressId { get; set; }
         public Address Address { get; set; }
@@ -43,6 +43,7 @@ namespace TrashCollector.Models
         [Display(Name ="Identity User")]
         public string UserId { get; set; }
         public IdentityUser IdentityUser { get; set; }
+
 
     }
 }

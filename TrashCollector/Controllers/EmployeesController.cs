@@ -66,7 +66,10 @@ namespace TrashCollector.Controllers
            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var employee = _context.Employees.FirstOrDefault(a => a.UserId == userId);
             var currentDay = DateTime.Now.DayOfWeek;
-            var customer = _context.Customers.Include(c => c.Address).Where(a => a.Address.ZipCode == employee.ZipCode && a.PickUpDay == currentDay).ToList();
+            var customer = _context.Customers
+                .Include(c => c.Address)
+                .Where(a => a.Address.ZipCode == employee.ZipCode && (a.PickUpDay == currentDay || a.OneTimePickUp == DateTime.Now.Date) && (a.IsSuspended == false))
+                .ToList();
             var existingModel = new EmployeeViewModel();
             existingModel.Employee = employee;
             existingModel.Customers = customer;
@@ -95,37 +98,6 @@ namespace TrashCollector.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
-        // GET: Employees/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var employee = await _context.Employees
-                .Include(e => e.IdentityUser)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (employee == null)
-            {
-                return NotFound();
-            }
-
-            return View(employee);
-        }
-
-        // POST: Employees/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var employee = await _context.Employees.FindAsync(id);
-            _context.Employees.Remove(employee);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
         private bool EmployeeExists(int id)
         {
             return _context.Employees.Any(e => e.Id == id);
