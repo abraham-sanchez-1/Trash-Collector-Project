@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TrashCollector.Data;
@@ -94,8 +95,21 @@ namespace TrashCollector.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(CustomerViewModel customerViewModel)
         {
+            //if (ModelState.IsValid)
+            //{
+            //    if (customerViewModel.Customer.SuspendStart>customerViewModel.Customer.SuspendEnd)
+            //    {
+            //        ModelState.AddModelError("SuspendStart", "Please select end date that is later than start date");
+            //        return View(customerViewModel);
+            //    } 
+            //website used: http://techfunda.com/howto/259/passing-error-to-view-from-controller-action
+            //}
             var address = customerViewModel.Address;
             var customer = customerViewModel.Customer;
+            if (customer.SuspendEnd > customer.SuspendStart)
+            {
+                customer.SuspendEnd = customer.SuspendStart;
+            }
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var addressId = customer.AddressId;
             Customer customerToBeUpdated = _context.Customers.Where(a => a.UserId == userId).FirstOrDefault();
@@ -121,7 +135,6 @@ namespace TrashCollector.Controllers
 
             return RedirectToAction("Index");
         }
-
         private bool CustomerExists(int id)
         {
             return _context.Customers.Any(e => e.Id == id);
