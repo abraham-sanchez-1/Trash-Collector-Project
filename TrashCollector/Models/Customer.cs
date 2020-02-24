@@ -28,6 +28,8 @@ namespace TrashCollector.Models
         [Display(Name = "One Time Pickup")]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime OneTimePickUp { get; set; }
+        [Display(Name ="Account Status")]
+        public bool IsSuspended { get; set; }
         [Display(Name = "Suspend Start")]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime SuspendStart { get; set; }
@@ -41,10 +43,6 @@ namespace TrashCollector.Models
         [Display(Name ="Identity User")]
         public string UserId { get; set; }
         public IdentityUser IdentityUser { get; set; }
-        
-
-
-
 
     }
 }
