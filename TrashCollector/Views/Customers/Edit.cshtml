@@ -105,12 +105,12 @@
                 </tr>
             </table>
         </div>
-
+        
         <div class="col">
             <h5>Edit Info</h5>
             <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-inline">
+                <div class="form">
                     <div class="form-group">
                         <input type="hidden" asp-for="Customer.Id" />
                         <input type="hidden" asp-for="Customer.FirstName" />
@@ -188,9 +188,11 @@
                 <div class="form-group">
                     <input type="submit" value="Update" class="btn btn-primary" />
                 </div>
+
             </form>
-        
         </div>
+            
+        
     </div>
 
     <hr />

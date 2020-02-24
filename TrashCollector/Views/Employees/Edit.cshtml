@@ -58,7 +58,10 @@
             <th>
                 Address
             </th>
-            <th></th>
+            <th>
+                Last Picked Up
+            </th>
+            <th>Confirm Pick Up</th>
         </tr>
     </thead>
     <tbody>
@@ -66,23 +69,25 @@
         {
             @foreach (var item in Model.Customers)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FirstName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LastName)
-                    </td>
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.Address.StreetAddress)
-                    </td>
-                    @if (!Model.HidePickupTrash)
-                    {
-                        <td>
-                            <a asp-action="PickupTrash" asp-route-id="@item.Id">Pickup Trash</a>
-                        </td>
-                    }*@
-                </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address.StreetName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastPickedUp)
+                </td>
+                <td>
+                <button type="button" class="btn btn-sm btn-outline-success" asp-action="PickupTrash" asp-route-id="@item.Id">Confirmed</button>
+                    
+                </td>
+            
+            </tr>
             }
         }
 
