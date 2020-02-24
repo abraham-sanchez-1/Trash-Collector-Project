@@ -86,6 +86,16 @@ namespace TrashCollector.Controllers
            
         }
 
+        public IActionResult ConfirmPickup (int Id)
+        {
+            Customer customer = _context.Customers.FirstOrDefault(a => a.Id == Id);
+            customer.LastPickedUp = DateTime.Now;
+            customer.Balance += 15;
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
+        }
+
         // GET: Employees/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

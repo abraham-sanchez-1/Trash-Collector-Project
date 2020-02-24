@@ -46,7 +46,7 @@
     </div>
 </div>
 
-<table class="table">
+<table class="table table-hover">
     <thead>
         <tr>
             <th>
@@ -69,7 +69,7 @@
         {
             @foreach (var item in Model.Customers)
             {
-            <tr>
+            <tr class="@(item.LastPickedUp.Date == DateTime.Today? "table-success": "table-danger" )">
                 <td>
                     @Html.DisplayFor(modelItem => item.FirstName)
                 </td>
@@ -82,9 +82,11 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.LastPickedUp)
                 </td>
-                <td>
-                <button type="button" class="btn btn-sm btn-outline-success" asp-action="PickupTrash" asp-route-id="@item.Id">Confirmed</button>
-                    
+                <td> 
+                        <a class="btn btn-sm btn-outline-success" asp-action="ConfirmPickup" asp-route-id="@item.Id">
+                            Confirm
+
+                        </a>
                 </td>
             
             </tr>
