@@ -65,7 +65,8 @@ namespace TrashCollector.Controllers
         {
            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var employee = _context.Employees.FirstOrDefault(a => a.UserId == userId);
-            var customer = _context.Customers.Include(c => c.Address).Where(a => a.Address.ZipCode == employee.ZipCode).ToList();
+            var currentDay = DateTime.Now.DayOfWeek;
+            var customer = _context.Customers.Include(c => c.Address).Where(a => a.Address.ZipCode == employee.ZipCode && a.PickUpDay == currentDay).ToList();
             var existingModel = new EmployeeViewModel();
             existingModel.Employee = employee;
             existingModel.Customers = customer;
