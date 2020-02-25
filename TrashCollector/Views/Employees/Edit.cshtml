@@ -45,9 +45,15 @@
         </div>
     </div>
 </div>
-<form asp-action="FilterByDay" asp-route-id="@Model">
+<form asp-action="FilterByDay">
     <div class="form-group">
-        
+        <input type="hidden" asp-for="Employee.UserId" />
+
+    </div>
+        @Html.HiddenFor(model => model.Customers)
+        @Html.HiddenFor(model => model.Employee)
+    <div class="form-group">
+
         <label asp-for="SelectedDay" class="control-label"></label>
         <select asp-for="SelectedDay" class="form-control">
             <option value="">Select Day</option>
@@ -102,18 +108,29 @@
                         @Html.DisplayFor(modelItem => item.LastPickedUp)
                     </td>
                     <td>
-                        <a class="btn btn-sm btn-outline-success" asp-action="ConfirmPickup" asp-route-id="@item.Id">
-                            Confirm
-
-                        </a>
+                        @if (item.PickUpDay == DateTime.Today.DayOfWeek && item.IsSuspended == false && item.LastPickedUp < DateTime.Today)
+                        {
+                            <a class="btn btn-success" asp-action="ConfirmPickup" asp-route-id="@item.Id">
+                                Confirm
+                            </a>
+                        }
+                        else if (item.PickUpDay == DateTime.Today.DayOfWeek && item.IsSuspended == false && item.LastPickedUp >= DateTime.Today)
+                        {
+                            <a class="btn btn-light">Picked Up Already</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-info">Future Pickup</a>
+                        }
                     </td>
+                        
 
                 </tr>
             }
         }
         else
         {
-            <p>No customers were found!</p>
+            <text>No customers were found!</text>
         }
 
     </tbody>

@@ -102,7 +102,8 @@ namespace TrashCollector.Controllers
             var existingModel = new EmployeeViewModel();
             existingModel.Employee = employee;
             existingModel.Customers = customer;
-            return View("Edit", employeeModel);
+            existingModel.SelectedDay = currentDay;
+            return View("Edit",existingModel);
         }
         public IActionResult ConfirmPickup (int Id)
         {
