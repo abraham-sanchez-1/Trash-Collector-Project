@@ -85,15 +85,24 @@ namespace TrashCollector.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(EmployeeViewModel employeeModel)
         {
-            
 
-            
+
+            return View(employeeModel);
            
         }
         public IActionResult FilterByDay (EmployeeViewModel employeeModel)
         {
-
-            return RedirectToAction("Edit", employeeModel);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var employee = _context.Employees.FirstOrDefault(a => a.UserId == userId);
+            var currentDay = employeeModel.SelectedDay;
+            var customer = _context.Customers
+                .Include(c => c.Address)
+                .Where(a => a.Address.ZipCode == employee.ZipCode && (a.PickUpDay == currentDay) && (a.IsSuspended == false))
+                .ToList();
+            var existingModel = new EmployeeViewModel();
+            existingModel.Employee = employee;
+            existingModel.Customers = customer;
+            return View("Edit", employeeModel);
         }
         public IActionResult ConfirmPickup (int Id)
         {

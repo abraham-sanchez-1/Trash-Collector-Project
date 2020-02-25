@@ -45,66 +45,83 @@
         </div>
     </div>
 </div>
+<form asp-action="FilterByDay" asp-route-id="@Model">
+    <div class="form-group">
+        
+        <label asp-for="SelectedDay" class="control-label"></label>
+        <select asp-for="SelectedDay" class="form-control">
+            <option value="">Select Day</option>
 
-<label asp-for="Customer.PickUpDay" class="control-label">
+            <option value="1">Monday</option>
+            <option value="2">Tuesday</option>
+            <option value="3">Wednesday</option>
+            <option value="4">Thursday</option>
+            <option value="5">Friday</option>
 
-    <table class="table table-hover">
-        <thead>
-            <tr class="table-active">
-                <th>
-                    First Name
-                </th>
-                <th>
-                    Last Name
-                </th>
-                <th>
-                    Address
-                </th>
-                <th>
-                    Last Picked Up
-                </th>
-                <th>Confirm Pick Up</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model.Customers != null)
+        </select>
+        <span asp-validation-for="SelectedDay" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Filter" class="btn btn-primary" />
+    </div>
+</form>
+<table class="table table-hover">
+    <thead>
+        <tr class="table-active">
+            <th>
+                First Name
+            </th>
+            <th>
+                Last Name
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                Last Picked Up
+            </th>
+            <th>Confirm Pick Up</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Customers != null)
+        {
+            @foreach (var item in Model.Customers)
             {
-                @foreach (var item in Model.Customers)
-                {
-                    <tr class="@(item.LastPickedUp.Date == DateTime.Today? "table-success": "table-danger" )">
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FirstName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LastName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Address.StreetName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LastPickedUp)
-                        </td>
-                        <td>
-                            <a class="btn btn-sm btn-outline-success" asp-action="ConfirmPickup" asp-route-id="@item.Id">
-                                Confirm
+                <tr class="@(item.LastPickedUp.Date == DateTime.Today? "table-success": "table-danger" )">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address.StreetName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastPickedUp)
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-outline-success" asp-action="ConfirmPickup" asp-route-id="@item.Id">
+                            Confirm
 
-                            </a>
-                        </td>
+                        </a>
+                    </td>
 
-                    </tr>
-                }
+                </tr>
             }
-            else
-            {
-                <p>No customers were found!</p>
-            }
+        }
+        else
+        {
+            <p>No customers were found!</p>
+        }
 
-        </tbody>
-    </table>
+    </tbody>
+</table>
 
 
 
 
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
