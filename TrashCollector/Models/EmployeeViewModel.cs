@@ -9,6 +9,7 @@ namespace TrashCollector.Models
     {
         public Employee Employee { get; set; }
         public List<Customer> Customers { get; set; }
+        public DayOfWeek SelectedDay { get; set; }
         
 
 

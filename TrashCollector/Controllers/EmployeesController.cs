@@ -29,6 +29,8 @@ namespace TrashCollector.Controllers
             {
                 return RedirectToAction("Create");
             }
+
+
             return RedirectToAction("Edit");
         }
         //Get: Employee/Create
@@ -85,10 +87,14 @@ namespace TrashCollector.Controllers
         {
             
 
-            return RedirectToAction(nameof(Index));
+            
            
         }
+        public IActionResult FilterByDay (EmployeeViewModel employeeModel)
+        {
 
+            return RedirectToAction("Edit", employeeModel);
+        }
         public IActionResult ConfirmPickup (int Id)
         {
             Customer customer = _context.Customers.FirstOrDefault(a => a.Id == Id);
@@ -96,7 +102,7 @@ namespace TrashCollector.Controllers
             customer.Balance += 15;
             _context.SaveChanges();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Edit));
         }
         private bool EmployeeExists(int id)
         {

@@ -95,19 +95,20 @@ namespace TrashCollector.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(CustomerViewModel customerViewModel)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    if (customerViewModel.Customer.SuspendStart>customerViewModel.Customer.SuspendEnd)
-            //    {
-            //        ModelState.AddModelError("SuspendStart", "Please select end date that is later than start date");
-            //        return View(customerViewModel);
-            //    } 
-            //website used: http://techfunda.com/howto/259/passing-error-to-view-from-controller-action
-            //}
+            
+                //if (customerViewModel.Customer.SuspendStart > customerViewModel.Customer.SuspendEnd)
+                //{
+                //    ModelState.AddModelError("SuspendStart", "Please select end date that is later than start date");
+                //    return View(customerViewModel);
+                //}
+                //website used: http://techfunda.com/howto/259/passing-error-to-view-from-controller-action
+                // this did not work
+            
             var address = customerViewModel.Address;
             var customer = customerViewModel.Customer;
-            if (customer.SuspendEnd > customer.SuspendStart)
+            if (customer.SuspendEnd < customer.SuspendStart)
             {
+                
                 customer.SuspendEnd = customer.SuspendStart;
             }
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
